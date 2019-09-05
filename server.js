@@ -1,24 +1,31 @@
-var http = require('http'), 
+let http = require('http'),
     fs = require('fs'), 
     url = require('url'),
     port = 8080;
 
 /* Global variables */
-var listingData, server;
+let listingData, server;
 
-var requestHandler = function(request, response) {
-  var parsedUrl = url.parse(request.url);
-
+let requestHandler = function(request, response) {
+  let parsedUrl = url.parse(request.url);
+  if (parsedUrl.pathname === '/listings'){
+    response.statusCode = 200;
+    response.end(JSON.stringify(listingData));
+  }
+  else{
+    response.statusCode = 404;
+    response.end('Bad gateway error');
+  }
   /*
-    Your request handler should send listingData in the JSON format as a response if a GET request 
-    is sent to the '/listings' path. Otherwise, it should send a 404 error. 
+    Your request handler should send listingData in the JSON format as a response if a GET request
+    is sent to the '/listings' path. Otherwise, it should send a 404 error.
 
-    HINT: Explore the request object and its properties 
+    HINT: Explore the request object and its properties
     HINT: Explore the response object and its properties
     https://code.tutsplus.com/tutorials/http-the-protocol-every-web-developer-must-know-part-1--net-31177
     http://stackoverflow.com/questions/17251553/nodejs-request-object-documentation
-    
-    HINT: Explore how callback's work 
+
+    HINT: Explore how callback's work
     http://www.theprojectspot.com/tutorial-post/nodejs-for-beginners-callbacks/4
     
     HINT: Explore the list of MIME Types
@@ -27,6 +34,14 @@ var requestHandler = function(request, response) {
 };
 
 fs.readFile('listings.json', 'utf8', function(err, data) {
+  listingData = JSON.parse(data);
+  // console.log(data.toString());
+  // console.log('------------------------------------');
+  // console.log(listingData.toString());
+  let server = http.createServer(requestHandler);
+  server.listen(port, () => {
+    console.log(`Server listening on: http://127.0.0.1:${port}`)
+  })
   /*
     This callback function should save the data in the listingData variable, 
     then start the server. 
