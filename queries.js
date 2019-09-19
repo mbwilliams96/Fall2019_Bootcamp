@@ -13,8 +13,8 @@ var findLibraryWest = function() {
     Find the document that contains data corresponding to Library West,
     then log it to the console. 
    */
-  Listing.findOne({'name':'Library West'}, function(err, l){
-      console.log(l);
+  Listing.findOne({'name':'Library West'}, function(err, result){
+      console.log(result);
   });
 };
 var removeCable = function() {
@@ -23,8 +23,8 @@ var removeCable = function() {
     on cable TV. Since we live in the 21st century and most courses are now web based, go ahead
     and remove this listing from your database and log the document to the console. 
    */
-  Listing.findOneAndRemove({'code':'CABL'}, function(err, l){
-      console.log(l);
+  Listing.findOneAndRemove({'code':'CABL'}, function(err, result){
+      console.log(result);
   });
 };
 var updatePhelpsLab = function() {
@@ -35,8 +35,8 @@ var updatePhelpsLab = function() {
     Correct Address: 1953 Museum Rd, Gainesville, FL 32603
 
    */
-  Listing.findOneAndUpdate({'name':'Phelps Laboratory'}, {'address':'1953 Museum Rd, Gainesville, FL 32603'}, {new:true}, function(err, l){
-      console.log(l);
+  Listing.findOneAndUpdate({'name':'Phelps Laboratory'}, {'address':'1953 Museum Rd, Gainesville, FL 32603'}, {new:true}, function(err, result){
+      console.log(result);
   });
 
 };
